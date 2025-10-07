@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<script src="favicon.js"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RadioSMG Live</title>
@@ -9,16 +8,16 @@
 <style>
 :root{
   --accent:#ff3b3f;
-  --dark:#111;
+  --dark:#0c0c0c;
   --light:#fff;
   --muted:#bbb;
-  --shadow:0 8px 30px rgba(0,0,0,.25);
   --grad:linear-gradient(145deg, #ff3b3f 0%, #ff5c61 50%, #ff7377 100%);
+  --shadow:0 8px 30px rgba(0,0,0,.25);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{
-  font-family:'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  background:radial-gradient(circle at top left, #1b1b1b 0%, #000 100%);
+  font-family:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
+  background:radial-gradient(circle at top left,#1b1b1b 0%,#000 100%);
   color:var(--light);
   display:flex;
   align-items:center;
@@ -26,36 +25,59 @@ body{
   min-height:100vh;
 }
 .container{
-  width:90%;
-  max-width:500px;
+  width:95%;
+  max-width:550px;
   background:#111;
   border-radius:22px;
   overflow:hidden;
   box-shadow:var(--shadow);
   text-align:center;
+  position:relative;
 }
 .header{
   background:var(--grad);
-  padding:25px 0;
+  padding:25px 0 15px;
+  position:relative;
 }
 .header h1{
-  font-size:26px;
+  font-size:28px;
   margin:0;
   font-weight:700;
-  letter-spacing:1px;
+  letter-spacing:1.5px;
 }
-.header p{
-  margin-top:6px;
+.freq{
   font-size:14px;
-  color:rgba(255,255,255,.9);
+  margin-top:4px;
+  color:#fff;
+  opacity:.9;
+}
+.live-indicator{
+  position:absolute;
+  top:15px;
+  right:15px;
+  background:#ff3b3f;
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+  padding:5px 10px;
+  border-radius:20px;
+  box-shadow:0 0 10px rgba(255,59,63,.7);
+}
+.clock{
+  position:absolute;
+  bottom:10px;
+  right:15px;
+  font-size:13px;
+  opacity:.9;
 }
 .album{
-  width:260px;
-  height:260px;
+  width:270px;
+  height:270px;
   border-radius:18px;
   overflow:hidden;
-  margin:30px auto 20px;
+  margin:30px auto 15px;
   box-shadow:0 0 25px rgba(255,59,63,.4);
+  transition:transform .4s ease;
 }
 .album img{
   width:100%;
@@ -71,57 +93,65 @@ body{
   color:var(--muted);
 }
 .status{
-  margin-top:12px;
+  margin-top:8px;
   font-size:14px;
   color:var(--muted);
 }
+.timeline{
+  width:85%;
+  margin:20px auto;
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  color:var(--muted);
+}
 .progress{
-  width:80%;
-  height:10px;
-  background:#333;
+  width:85%;
+  height:8px;
+  background:#222;
   border-radius:5px;
-  margin:25px auto;
+  margin:0 auto 20px;
   overflow:hidden;
+  position:relative;
 }
 .bar{
   width:0%;
   height:100%;
   background:var(--accent);
+  box-shadow:0 0 10px rgba(255,59,63,.5);
   transition:width 0.2s linear;
 }
 .controls{
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:20px;
+  gap:25px;
   margin-bottom:30px;
 }
 button{
   background:var(--grad);
   border:none;
   color:white;
-  font-size:18px;
+  font-size:20px;
   border-radius:50%;
-  width:50px;
-  height:50px;
+  width:55px;
+  height:55px;
   cursor:pointer;
   box-shadow:0 4px 14px rgba(255,59,63,.4);
   transition:transform 0.2s;
 }
-button:hover{
-  transform:scale(1.08);
-}
-button:active{
-  transform:scale(0.95);
-}
+button:hover{transform:scale(1.08);}
+button:active{transform:scale(0.95);}
 audio{display:none;}
 </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1></h1>RadioSMG</h1>
-      <p>Live SMG radio</p>
+      <h1>RadioSMG</h1>
+      <div class="freq">103.5 MHz • The Hottest Live Hits</div>
+      <div class="live-indicator">LIVE 🔴</div>
+      <div class="clock" id="clock"></div>
     </div>
     <div class="album"><img id="album" alt="Album Art"></div>
     <div class="songinfo">
@@ -129,7 +159,13 @@ audio{display:none;}
       <p id="artist"></p>
     </div>
     <div class="status" id="status">Laden...</div>
+
+    <div class="timeline">
+      <span id="currentTime">0:00</span>
+      <span id="duration">--:--</span>
+    </div>
     <div class="progress"><div class="bar" id="bar"></div></div>
+
     <div class="controls">
       <button id="prev">⏮</button>
       <button id="playpause">⏯</button>
@@ -154,7 +190,7 @@ const songs = [
   },
   {
     title:"Folded",
-    artist:"kehlani",
+    artist:"Kehlani",
     img:"https://f4.bcbits.com/img/a3393363695_16.jpg",
     src:"muziek/Kehlani-Folded.mp3"
   }
@@ -170,6 +206,23 @@ const audio = document.getElementById("audio");
 const playpauseBtn = document.getElementById("playpause");
 const nextBtn = document.getElementById("next");
 const prevBtn = document.getElementById("prev");
+const currentTimeEl = document.getElementById("currentTime");
+const durationEl = document.getElementById("duration");
+const clockEl = document.getElementById("clock");
+
+// Display live time (like radio clock)
+function updateClock(){
+  const now = new Date();
+  clockEl.textContent = now.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+setInterval(updateClock,1000);
+updateClock();
+
+function formatTime(sec){
+  const m = Math.floor(sec/60);
+  const s = Math.floor(sec%60);
+  return `${m}:${s.toString().padStart(2,"0")}`;
+}
 
 function loadSong(i){
   const s = songs[i];
@@ -177,9 +230,14 @@ function loadSong(i){
   titleEl.textContent = s.title;
   artistEl.textContent = s.artist;
   status.textContent = `Afspelen: ${s.title} – ${s.artist}`;
+  bar.style.width = "0%";
+  currentTimeEl.textContent = "0:00";
+  durationEl.textContent = "--:--";
   audio.src = s.src;
-  audio.play().catch(()=>{}); // Try autoplay
+  audio.play().catch(()=>{});
+  playpauseBtn.textContent = "⏸";
 }
+
 function playPause(){
   if(audio.paused){
     audio.play();
@@ -189,6 +247,7 @@ function playPause(){
     playpauseBtn.textContent = "▶️";
   }
 }
+
 nextBtn.onclick = ()=>{
   index = (index + 1) % songs.length;
   loadSong(index);
@@ -199,19 +258,22 @@ prevBtn.onclick = ()=>{
 };
 playpauseBtn.onclick = playPause;
 
+// Progress + time display
 audio.addEventListener("timeupdate",()=>{
   if(audio.duration){
     const p = (audio.currentTime / audio.duration) * 100;
     bar.style.width = p + "%";
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+    durationEl.textContent = formatTime(audio.duration);
   }
 });
 audio.addEventListener("ended",()=>{
   index = (index + 1) % songs.length;
   loadSong(index);
 });
+
 window.addEventListener("load",()=>{
   loadSong(index);
-  // Try to auto-start (browser blocks are common)
   const resumeAudio = () => {
     audio.play().catch(()=>{});
     document.removeEventListener('click', resumeAudio);
