@@ -89,9 +89,10 @@ body{
   width:0%;
   height:100%;
   background:var(--accent);
-  transition:width 1s linear;
+  transition:width 0.3s linear;
 }
 .status{font-size:14px;color:var(--muted);margin-bottom:16px;}
+audio{display:none}
 </style>
 </head>
 <body>
@@ -111,49 +112,63 @@ body{
     </div>
     <div class="status" id="status"></div>
     <div class="progress"><div class="bar" id="bar"></div></div>
+    <audio id="audio" controls></audio>
   </div>
 </div>
+
 <script>
-const songs=[
-  {title:"America's Sweetheart",artist:"Elle King",img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn4LL8fWYJrAnzNcpSbA1qpkEeQOemL20x0A&s",link:"https://youtu.be/RGXaLdVMwRU?si=vta8gbgPfXBLsbn1"},
-  {title:"Dark Horse",artist:"Katy Perry",img:"https://i1.sndcdn.com/artworks-000085292182-jrojrz-t500x500.jpg",link:"https://youtu.be/0KSOMA3QBU0?si=wHj4kNLxCzAJqYpE"},
-  {title:"Leef",artist:"André Hazes Jr.",img:"https://picsum.photos/400?3",link:"https://www.youtube.com/watch?v=J3Z1ZfP9D24"},
-  {title:"Iedereen is van de wereld",artist:"The Scene",img:"https://picsum.photos/400?4",link:"https://www.youtube.com/watch?v=0O3wK6g9TxA"},
-  {title:"Roller Coaster",artist:"Danny Vera",img:"https://picsum.photos/400?5",link:"https://www.youtube.com/watch?v=8K3ZCecE4IY"},
-  {title:"Arcade",artist:"Duncan Laurence",img:"https://picsum.photos/400?6",link:"https://www.youtube.com/watch?v=R3D-r4ogr7s"},
-  {title:"Het is een nacht",artist:"Guus Meeuwis",img:"https://picsum.photos/400?7",link:"https://www.youtube.com/watch?v=4rD9jvJ2eZs"},
-  {title:"Links Rechts",artist:"Snollebollekes",img:"https://picsum.photos/400?8",link:"https://www.youtube.com/watch?v=6L1xZsO0JY8"}
-];
-let index=0;
-const duration=15000; // set how long each song plays (ms)
-const album=document.getElementById("album");
-const title=document.getElementById("title");
-const artist=document.getElementById("artist");
-const bar=document.getElementById("bar");
-const status=document.getElementById("status");
-function showSong(i){
-  const s=songs[i];
-  album.src=s.img;
-  title.textContent=s.title;
-  artist.textContent=s.artist;
-  status.textContent="Afspelen: "+s.title+" – "+s.artist;
-  bar.style.width="0%";
-}
-let progress=0;
-let elapsed=0;
-function tick(){
-  elapsed+=1000;
-  progress=(elapsed/duration)*100;
-  bar.style.width=progress+"%";
-  if(elapsed>=duration){
-    index=(index+1)%songs.length;
-    showSong(index);
-    elapsed=0;
-    progress=0;
+const songs = [
+  {
+    title:"Dreams",
+    artist:"Scott Buckley",
+    img:"https://picsum.photos/id/1015/400/400",
+    src:"https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Scott_Buckley/Music_for_Projects_Vol_3/Scott_Buckley_-_02_-_Dreams.mp3"
+  },
+  {
+    title:"In Peace",
+    artist:"Ketsa",
+    img:"https://picsum.photos/id/1025/400/400",
+    src:"https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Ketsa/In_Peace/Ketsa_-_01_-_In_Peace.mp3"
+  },
+  {
+    title:"Journey",
+    artist:"Jay Someday",
+    img:"https://picsum.photos/id/1003/400/400",
+    src:"https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Jay_Someday/Journey/Jay_Someday_-_Journey.mp3"
   }
+];
+
+let index = 0;
+const album = document.getElementById("album");
+const titleEl = document.getElementById("title");
+const artistEl = document.getElementById("artist");
+const status = document.getElementById("status");
+const bar = document.getElementById("bar");
+const audio = document.getElementById("audio");
+
+function loadSong(i){
+  const s = songs[i];
+  album.src = s.img;
+  titleEl.textContent = s.title;
+  artistEl.textContent = s.artist;
+  status.textContent = "Afspelen: " + s.title + " – " + s.artist;
+  audio.src = s.src;
+  audio.play();
 }
-showSong(index);
-setInterval(tick,1000);
+
+audio.addEventListener("timeupdate",()=>{
+  if(audio.duration){
+    const progress = (audio.currentTime / audio.duration) * 100;
+    bar.style.width = progress + "%";
+  }
+});
+
+audio.addEventListener("ended",()=>{
+  index = (index + 1) % songs.length;
+  loadSong(index);
+});
+
+loadSong(index);
 </script>
 </body>
 </html>
