@@ -2,365 +2,293 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RadioSMG • Live 103.5 MHz</title>
-<link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3e/Radio_icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radio Nova Maria • De stem van Sint-Maria</title>
+<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/727/727240.png">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
-:root{
-  --accent:#ff3b3f;
-  --accent2:#ff6f91;
-  --bg:#0a0a0a;
-  --panel:#111111cc;
-  --text:#f8f8f8;
-  --muted:#888;
-  --radius:24px;
-  --blur:25px;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap');
+
+:root {
+  --bg: radial-gradient(circle at top right, #161623, #0b0b14 70%);
+  --accent1: #8a5cff;
+  --accent2: #ff4d8c;
+  --accent3: #00d4ff;
+  --text: #fdfdfd;
+  --muted: rgba(255,255,255,0.6);
+  --glass: rgba(255,255,255,0.08);
+  --radius: 20px;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-  font-family:'Inter',sans-serif;
-  background:radial-gradient(circle at 30% 20%,#1e1e1e 0%,#000 100%);
-  color:var(--text);
+
+* {margin:0;padding:0;box-sizing:border-box;}
+body {
+  font-family:'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   height:100vh;
   overflow:hidden;
 }
-.container{
-  width:95%;
-  max-width:1100px;
-  display:grid;
-  grid-template-columns:380px 1fr;
-  background:var(--panel);
-  border-radius:var(--radius);
-  backdrop-filter:blur(var(--blur));
-  box-shadow:0 0 60px rgba(255,59,63,0.15);
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,0.08);
-  position:relative;
+
+/* Floating background glow */
+body::before {
+  content:"";
+  position:absolute;
+  width:250%;
+  height:250%;
+  background:conic-gradient(from 45deg, var(--accent1), var(--accent2), var(--accent3), var(--accent1));
+  animation:spin 20s linear infinite;
+  opacity:.07;
+  z-index:-2;
 }
-.left{
-  position:relative;
-  background:linear-gradient(160deg,#0d0d0d,#181818);
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* Container */
+.container {
+  width:90%;
+  max-width:950px;
+  background:var(--glass);
+  border-radius:var(--radius);
+  box-shadow:0 0 60px rgba(0,0,0,0.4);
+  backdrop-filter:blur(25px) saturate(180%);
+  padding:40px;
   display:flex;
   flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:30px;
+  gap:25px;
 }
-.vinyl{
-  width:270px;
-  height:270px;
-  border-radius:50%;
-  background:conic-gradient(#111 0deg,#222 30deg,#111 60deg,#222 90deg,#111 120deg,#222 150deg,#111 180deg,#222 210deg,#111 240deg,#222 270deg,#111 300deg,#222 330deg,#111 360deg);
+
+/* Header */
+header {
   display:flex;
+  justify-content:space-between;
   align-items:center;
-  justify-content:center;
-  animation:spin 6s linear infinite paused;
-  box-shadow:0 0 60px rgba(255,59,63,0.3), inset 0 0 20px #000;
-  position:relative;
 }
-.vinyl.play{animation-play-state:running;}
-.vinyl::after{
-  content:"";
-  position:absolute;
-  width:20px;
-  height:20px;
-  background:#111;
-  border-radius:50%;
-  z-index:5;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-.vinyl img{
-  width:100px;
-  height:100px;
-  border-radius:12px;
-  object-fit:cover;
-  z-index:2;
-  box-shadow:0 0 30px rgba(255,59,63,0.5);
-}
-.stylus{
-  position:absolute;
-  width:160px;
-  height:8px;
-  background:linear-gradient(90deg,#666,#999);
-  top:60px;
-  right:-70px;
-  border-radius:10px;
-  transform-origin:left center;
-  transform:rotate(30deg);
-  transition:transform .8s ease;
-  box-shadow:0 0 10px rgba(255,255,255,0.2);
-}
-.stylus::after{
-  content:"";
-  position:absolute;
-  right:-10px;
-  top:-4px;
-  width:18px;
-  height:18px;
-  background:#bbb;
-  border-radius:50%;
-}
-.vinyl.play~.stylus{transform:rotate(10deg);}
-.freq{
-  margin-top:45px;
-  text-align:center;
-}
-.freq h1{
-  font-size:38px;
+.logo {
   font-weight:900;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  font-size:30px;
+  background:linear-gradient(90deg,var(--accent2),var(--accent3));
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.freq p{
+.slogan {
   font-size:14px;
   color:var(--muted);
-  letter-spacing:2px;
   text-transform:uppercase;
-  margin-top:6px;
+  letter-spacing:1.2px;
 }
 
-/* right panel */
-.right{
-  padding:40px 35px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  position:relative;
-  overflow:hidden;
-}
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.logo{
-  font-size:22px;
-  font-weight:900;
-  letter-spacing:1px;
-}
-.live{
-  background:linear-gradient(120deg,var(--accent),var(--accent2));
-  padding:7px 18px;
-  border-radius:999px;
-  font-weight:700;
-  font-size:12px;
-  box-shadow:0 0 20px rgba(255,59,63,.5);
-}
-.now{
+/* Player Section */
+.player {
   display:flex;
   align-items:center;
-  gap:25px;
-  margin-top:30px;
+  gap:30px;
 }
-.cover{
-  width:150px;
-  height:150px;
-  border-radius:16px;
+.cover {
+  width:180px;
+  height:180px;
+  border-radius:var(--radius);
   overflow:hidden;
-  box-shadow:0 8px 25px rgba(255,59,63,0.3);
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
 }
-.cover img{width:100%;height:100%;object-fit:cover;}
-.info h2{font-size:24px;margin-bottom:5px;font-weight:800;}
-.info p{color:var(--muted);font-size:16px;}
+.cover img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.details h2 {
+  font-size:28px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.details p {
+  color:var(--muted);
+  margin-top:5px;
+  font-size:16px;
+}
 
-.progress-container{margin:35px 0 15px;}
-.bar-bg{
+/* Equalizer animation */
+.equalizer {
+  display:flex;
+  gap:4px;
+  margin-top:15px;
+}
+.equalizer span {
+  display:block;
+  width:5px;
+  height:15px;
+  background:linear-gradient(to top,var(--accent2),var(--accent3));
+  border-radius:3px;
+  animation:move 0.9s ease-in-out infinite alternate;
+}
+.equalizer span:nth-child(2){animation-delay:0.15s;}
+.equalizer span:nth-child(3){animation-delay:0.3s;}
+.equalizer span:nth-child(4){animation-delay:0.45s;}
+.equalizer span:nth-child(5){animation-delay:0.6s;}
+@keyframes move {
+  from {height:10px; opacity:.6;}
+  to {height:35px; opacity:1;}
+}
+
+/* Progress Bar */
+.progress {
   width:100%;
   height:10px;
-  background:#1d1d1d;
+  background:rgba(255,255,255,0.1);
   border-radius:999px;
   overflow:hidden;
+  margin:15px 0;
 }
-.bar{
+.bar {
   width:0%;
   height:100%;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  background:linear-gradient(90deg,var(--accent2),var(--accent3));
   transition:width .2s linear;
 }
-.time{
+.time {
   display:flex;
   justify-content:space-between;
   font-size:13px;
   color:var(--muted);
-  margin-top:8px;
 }
-.controls{
+
+/* Controls */
+.controls {
   display:flex;
   justify-content:center;
-  align-items:center;
   gap:30px;
-  margin-top:25px;
+  margin-top:10px;
 }
-button{
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
+button {
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
   border:none;
   color:white;
   font-size:22px;
   border-radius:50%;
-  width:68px;
-  height:68px;
+  width:70px;
+  height:70px;
   cursor:pointer;
-  box-shadow:0 8px 25px rgba(255,59,63,.4);
-  transition:all .25s;
+  box-shadow:0 6px 20px rgba(0,0,0,0.3);
+  transition:transform .2s, box-shadow .2s;
 }
-button:hover{transform:scale(1.15);}
-button:active{transform:scale(.95);}
-.volume{
-  margin-top:25px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.volume input{
-  width:120px;
-  accent-color:var(--accent2);
-  cursor:pointer;
-}
-.footer{
+button:hover { transform:scale(1.1); box-shadow:0 0 20px var(--accent2); }
+button:active { transform:scale(0.95); }
+
+/* Footer */
+footer {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-top:25px;
-  font-size:13px;
+  font-size:14px;
   color:var(--muted);
 }
-.clock{
-  font-weight:700;
-  color:var(--accent2);
-}
+.clock { color:var(--accent3); font-weight:600; }
 
-.visualizer{
-  position:absolute;
-  bottom:0;
-  left:0;
-  width:100%;
-  height:80px;
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-  gap:8px;
-  z-index:0;
-}
-.visualizer span{
-  width:8px;
-  height:20px;
-  background:linear-gradient(180deg,var(--accent2),var(--accent));
-  border-radius:4px;
-  animation:beat 1s ease-in-out infinite;
-  opacity:.6;
-}
-.visualizer span:nth-child(odd){animation-delay:.2s;}
-@keyframes beat{
-  0%,100%{transform:scaleY(0.4);}
-  50%{transform:scaleY(2);}
-}
-
-@media(max-width:880px){
-  .container{grid-template-columns:1fr;}
-  .left{display:none;}
-  .right{padding:30px 25px;}
+@media(max-width:700px){
+  .player {flex-direction:column;align-items:center;text-align:center;}
+  .cover{width:140px;height:140px;}
+  .details h2{font-size:22px;}
 }
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="left">
-    <div class="vinyl" id="vinyl"><img id="vinylImg" src="" alt=""></div>
-    <div class="stylus"></div>
-    <div class="freq">
-      <h1>103.5 MHz</h1>
-      <p>RadioSMG FM</p>
-    </div>
-  </div>
-  <div class="right">
-    <div>
-      <div class="top">
-        <div class="logo">RADIOSMG</div>
-        <div class="live">LIVE</div>
+  <div class="container">
+    <header>
+      <div>
+        <div class="logo">Radio Nova Maria</div>
+        <div class="slogan">De stem van Sint-Maria — waar talent klinkt</div>
       </div>
-      <div class="now">
-        <div class="cover"><img id="cover" src="" alt=""></div>
-        <div class="info">
-          <h2 id="title"></h2>
-          <p id="artist"></p>
+      <div class="clock" id="clock">--:--:--</div>
+    </header>
+
+    <div class="player">
+      <div class="cover"><img id="cover" src="" alt=""></div>
+      <div class="details">
+        <h2 id="title">Laden...</h2>
+        <p id="artist"></p>
+        <div class="equalizer">
+          <span></span><span></span><span></span><span></span><span></span>
         </div>
       </div>
-      <div class="progress-container">
-        <div class="bar-bg"><div class="bar" id="bar"></div></div>
-        <div class="time"><span id="current">0:00</span><span id="duration">--:--</span></div>
-      </div>
-      <div class="controls">
-        <button id="prev">⏮</button>
-        <button id="play">▶️</button>
-        <button id="next">⏭</button>
-      </div>
-      <div class="volume">🔊 <input type="range" id="vol" min="0" max="1" step="0.01" value="1"></div>
     </div>
-    <div class="footer">
+
+    <div class="progress">
+      <div class="bar" id="bar"></div>
+    </div>
+    <div class="time"><span id="current">0:00</span><span id="duration">--:--</span></div>
+
+    <div class="controls">
+      <button id="prev">⏮</button>
+      <button id="play">▶️</button>
+      <button id="next">⏭</button>
+    </div>
+
+    <footer>
       <div>Streaming • 128kbps</div>
-      <div class="clock" id="clock">--:--:--</div>
-    </div>
-    <div class="visualizer" id="viz">
-      <span></span><span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span><span></span>
-    </div>
+      <div>Powered by Sint-Maria Radio Team</div>
+    </footer>
   </div>
-</div>
-<audio id="audio"></audio>
+
+  <audio id="audio"></audio>
 
 <script>
-const nummers=[
-{titel:"You",artiest:"Lloyd",img:"https://upload.wikimedia.org/wikipedia/en/6/6b/Lloyd_you_single_cover.jpg",src:"muziek/Lloyd-You.mp3"},
-{titel:"Cece's Interlude",artiest:"Drake",img:"https://i1.sndcdn.com/artworks-dUAvxLqhrTEx-0-t500x500.jpg",src:"muziek/Cece's-Interlude.mp3"},
-{titel:"Folded",artiest:"Kehlani",img:"https://f4.bcbits.com/img/a3393363695_16.jpg",src:"muziek/Kehlani-Folded.mp3"}
+const nummers = [
+  {titel:"You", artiest:"Lloyd", img:"https://upload.wikimedia.org/wikipedia/en/6/6b/Lloyd_you_single_cover.jpg", src:"muziek/Lloyd-You.mp3"},
+  {titel:"Cece's Interlude", artiest:"Drake", img:"https://i1.sndcdn.com/artworks-dUAvxLqhrTEx-0-t500x500.jpg", src:"muziek/Cece's-Interlude.mp3"},
+  {titel:"Folded", artiest:"Kehlani", img:"https://f4.bcbits.com/img/a3393363695_16.jpg", src:"muziek/Kehlani-Folded.mp3"}
 ];
 
-let index=0;
-const audio=document.getElementById("audio");
-const play=document.getElementById("play");
-const next=document.getElementById("next");
-const prev=document.getElementById("prev");
-const bar=document.getElementById("bar");
-const current=document.getElementById("current");
-const duration=document.getElementById("duration");
-const titel=document.getElementById("title");
-const artiest=document.getElementById("artist");
-const cover=document.getElementById("cover");
-const vinyl=document.getElementById("vinyl");
-const vinylImg=document.getElementById("vinylImg");
-const clock=document.getElementById("clock");
-const vol=document.getElementById("vol");
-const viz=document.getElementById("viz");
+let index = 0;
+const audio = document.getElementById("audio");
+const play = document.getElementById("play");
+const next = document.getElementById("next");
+const prev = document.getElementById("prev");
+const bar = document.getElementById("bar");
+const current = document.getElementById("current");
+const duration = document.getElementById("duration");
+const title = document.getElementById("title");
+const artist = document.getElementById("artist");
+const cover = document.getElementById("cover");
+const clock = document.getElementById("clock");
 
 function format(t){const m=Math.floor(t/60),s=Math.floor(t%60);return m+":"+(s<10?"0"+s:s);}
+
 function laad(i){
-  const n=nummers[i];
-  audio.src=n.src;
-  titel.textContent=n.titel;
-  artiest.textContent=n.artiest;
-  cover.src=n.img;
-  vinylImg.src=n.img;
-  bar.style.width="0%";
-  current.textContent="0:00";
-  duration.textContent="--:--";
+  const n = nummers[i];
+  audio.src = n.src;
+  title.textContent = n.titel;
+  artist.textContent = n.artiest;
+  cover.src = n.img;
+  bar.style.width = "0%";
+  current.textContent = "0:00";
+  duration.textContent = "--:--";
   audio.play().then(()=>{
     play.textContent="⏸";
-    vinyl.classList.add("play");
-  }).catch(()=>{play.textContent="▶️";});
+  }).catch(()=>{ play.textContent="▶️"; });
 }
+
 function wissel(){
-  if(audio.paused){audio.play();play.textContent="⏸";vinyl.classList.add("play");}
-  else{audio.pause();play.textContent="▶️";vinyl.classList.remove("play");}
+  if(audio.paused){
+    audio.play();
+    play.textContent="⏸";
+  } else {
+    audio.pause();
+    play.textContent="▶️";
+  }
 }
-next.onclick=()=>{index=(index+1)%nummers.length;laad(index);}
-prev.onclick=()=>{index=(index-1+nummers.length)%nummers.length;laad(index);}
-play.onclick=wissel;
-audio.addEventListener("loadedmetadata",()=>{duration.textContent=format(audio.duration);});
+
+next.onclick = ()=>{ index=(index+1)%nummers.length; laad(index); };
+prev.onclick = ()=>{ index=(index-1+nummers.length)%nummers.length; laad(index); };
+play.onclick = wissel;
+
+document.addEventListener('keydown', e=>{
+  if(e.code==="Space"){e.preventDefault(); wissel();}
+  if(e.code==="ArrowRight"){next.click();}
+  if(e.code==="ArrowLeft"){prev.click();}
+});
+
+audio.addEventListener("loadedmetadata",()=>{ duration.textContent=format(audio.duration); });
 audio.addEventListener("timeupdate",()=>{
   if(audio.duration){
     const p=(audio.currentTime/audio.duration)*100;
@@ -368,32 +296,14 @@ audio.addEventListener("timeupdate",()=>{
     current.textContent=format(audio.currentTime);
   }
 });
-audio.addEventListener("ended",()=>{index=(index+1)%nummers.length;laad(index);});
+audio.addEventListener("ended",()=>{ index=(index+1)%nummers.length; laad(index); });
+
 function updateClock(){
   const n=new Date();
   clock.textContent=n.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
 }
-setInterval(updateClock,1000); updateClock();
-
-vol.addEventListener("input",()=>{audio.volume=vol.value;});
-
-// Space + pijltjes bediening
-document.addEventListener("keydown",(e)=>{
-  if(e.code==="Space"){e.preventDefault();wissel();}
-  if(e.code==="ArrowRight"){next.click();}
-  if(e.code==="ArrowLeft"){prev.click();}
-});
-
-// simple animated visualizer
-setInterval(()=>{
-  if(!audio.paused){
-    [...viz.children].forEach(span=>{
-      span.style.height=Math.random()*50+10+"px";
-    });
-  } else {
-    [...viz.children].forEach(span=>{span.style.height="10px";});
-  }
-},120);
+setInterval(updateClock,1000);
+updateClock();
 
 window.onload=()=>{
   laad(index);
