@@ -1,1 +1,99 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RADIOSMG — Radio Programma</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <aside class="leftbar">
+    <div class="brand">
+      <div class="logo-circle">R</div>
+      <div class="brand-text">RADIOSMG</div>
+    </div>
+    <!-- kleine nav icons (placeholder) -->
+    <div class="side-icons">
+      <div class="icon">Q</div>
+      <div class="icon">F</div>
+      <div class="icon">M</div>
+    </div>
+  </aside>
 
+  <header class="topbar">
+    <div class="presenter">
+      <img src="https://via.placeholder.com/64" alt="dj" />
+      <div>
+        <div class="dj-name">JOUW NAAM</div>
+        <div class="dj-time">MA — DO 13u tot 16u</div>
+      </div>
+    </div>
+    <button class="live-btn">KIJK LIVE</button>
+  </header>
+
+  <main class="main">
+    <section class="player-row">
+      <!-- Vorige -->
+      <div class="card side-card" id="card-prev">
+        <div class="card-image-wrap">
+          <img id="prev-cover" src="https://via.placeholder.com/400x400?text=Vorige" alt="">
+        </div>
+        <div class="card-title" id="prev-title">—</div>
+        <div class="card-sub" id="prev-artist"></div>
+      </div>
+
+      <!-- Midden (huidig) -->
+      <div class="card center-card">
+        <div class="cover-wrap">
+          <img id="current-cover" src="https://via.placeholder.com/500x500?text=Huidig" alt="">
+          <div class="heart">♡</div>
+        </div>
+        <div class="now-meta">
+          <div class="now-title" id="current-title">Geen nummer</div>
+          <div class="now-artist" id="current-artist">RADIOSMG</div>
+        </div>
+
+        <!-- Audio elements -->
+        <audio id="audio" preload="auto"></audio>
+        <div id="yt-player-wrapper" class="hidden"><div id="yt-player"></div></div>
+
+        <!-- progress + controls -->
+        <div class="volume-row">
+          <span class="vol-icon">🔈</span>
+          <input id="volume" type="range" min="0" max="1" step="0.01" value="1">
+          <span class="vol-icon">🔊</span>
+        </div>
+
+        <div class="progress-area">
+          <div id="progress-bar"><div id="progress-fill"></div><div id="progress-dot"></div></div>
+        </div>
+
+        <div class="time-text" id="time-text">0.0s / 0s</div>
+
+        <div class="controls">
+          <button id="prev">⬅︎</button>
+          <button id="play" class="big-play">●</button>
+          <button id="pause" class="big-play" style="display:none">▮▮</button>
+          <button id="next">➡︎</button>
+        </div>
+      </div>
+
+      <!-- Volgende -->
+      <div class="card side-card" id="card-next">
+        <div class="card-image-wrap">
+          <img id="next-cover" src="https://via.placeholder.com/400x400?text=Volgende" alt="">
+        </div>
+        <div class="card-title" id="next-title">—</div>
+        <div class="card-sub" id="next-artist"></div>
+      </div>
+    </section>
+
+    <section class="playlist-section">
+      <h3 class="playlist-heading">Volgorde</h3>
+      <ol id="playlist"></ol>
+    </section>
+  </main>
+
+  <script src="js/player.js"></script>
+</body>
+</html>
