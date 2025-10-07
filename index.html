@@ -3,283 +3,314 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RadioSMG Live</title>
+<title>RadioSMG Live 103.5 MHz</title>
 <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3e/Radio_icon.png">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
 :root{
-  --accent:#ff3b3f;
-  --dark:#0c0c0c;
-  --light:#fff;
-  --muted:#bbb;
-  --grad:linear-gradient(145deg, #ff3b3f 0%, #ff5c61 50%, #ff7377 100%);
-  --shadow:0 8px 30px rgba(0,0,0,.25);
+--accent:#ff3b3f;
+--accent2:#ff7073;
+--dark:#0c0c0c;
+--mid:#141414;
+--light:#f4f4f4;
+--muted:#888;
+--grad:linear-gradient(120deg,var(--accent),var(--accent2));
+--radius:20px;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
-  font-family:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
-  background:radial-gradient(circle at top left,#1b1b1b 0%,#000 100%);
-  color:var(--light);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:100vh;
+font-family:'Inter',sans-serif;
+background:radial-gradient(circle at 20% 20%,#1a1a1a 0%,#000 100%);
+color:var(--light);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+overflow:hidden;
 }
 .container{
-  width:95%;
-  max-width:550px;
-  background:#111;
-  border-radius:22px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-  text-align:center;
-  position:relative;
+width:90%;
+max-width:950px;
+background:rgba(20,20,20,0.95);
+border-radius:var(--radius);
+overflow:hidden;
+box-shadow:0 0 50px rgba(255,59,63,0.25);
+display:grid;
+grid-template-columns:360px 1fr;
+backdrop-filter:blur(12px);
 }
-.header{
-  background:var(--grad);
-  padding:25px 0 15px;
-  position:relative;
+.left{
+background:#0e0e0e;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+position:relative;
+padding:30px 20px;
 }
-.header h1{
-  font-size:28px;
-  margin:0;
-  font-weight:700;
-  letter-spacing:1.5px;
+.left::before{
+content:"";
+position:absolute;
+inset:0;
+background:radial-gradient(circle at top,var(--accent) 0%,transparent 60%);
+opacity:.05;
+}
+.vinyl{
+width:250px;
+height:250px;
+border-radius:50%;
+background:conic-gradient(#111 0deg,#222 40deg,#111 80deg,#222 120deg,#111 160deg,#222 200deg,#111 240deg,#222 280deg,#111 320deg,#222 360deg);
+box-shadow:inset 0 2px 8px rgba(255,255,255,0.05),0 25px 80px rgba(0,0,0,0.8);
+display:flex;
+align-items:center;
+justify-content:center;
+animation:spin 6s linear infinite paused;
+}
+.vinyl.play{animation-play-state:running;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.vinyl img{
+width:90px;
+height:90px;
+border-radius:12px;
+object-fit:cover;
+box-shadow:0 0 25px rgba(255,59,63,.4);
 }
 .freq{
-  font-size:14px;
-  margin-top:4px;
-  color:#fff;
-  opacity:.9;
+margin-top:40px;
+text-align:center;
 }
-.live-indicator{
-  position:absolute;
-  top:15px;
-  right:15px;
-  background:#ff3b3f;
-  color:#fff;
-  font-size:13px;
-  font-weight:600;
-  padding:5px 10px;
-  border-radius:20px;
-  box-shadow:0 0 10px rgba(255,59,63,.7);
+.freq h1{
+font-size:38px;
+background:var(--grad);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+font-weight:900;
+letter-spacing:1px;
 }
-.clock{
-  position:absolute;
-  bottom:10px;
-  right:15px;
-  font-size:13px;
-  opacity:.9;
+.freq p{
+font-size:14px;
+color:var(--muted);
+letter-spacing:2px;
+text-transform:uppercase;
+margin-top:4px;
 }
-.album{
-  width:270px;
-  height:270px;
-  border-radius:18px;
-  overflow:hidden;
-  margin:30px auto 15px;
-  box-shadow:0 0 25px rgba(255,59,63,.4);
-  transition:transform .4s ease;
+
+/* RIGHT SIDE */
+.right{
+padding:40px 30px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+background:linear-gradient(180deg,#111,#0c0c0c);
 }
-.album img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
 }
-.songinfo h2{
-  font-size:22px;
-  margin:8px 0 4px;
+.logo{
+font-weight:900;
+font-size:22px;
+letter-spacing:1px;
 }
-.songinfo p{
-  font-size:15px;
-  color:var(--muted);
+.live{
+background:var(--grad);
+color:#fff;
+font-weight:700;
+font-size:12px;
+padding:6px 14px;
+border-radius:999px;
+box-shadow:0 0 18px rgba(255,59,63,0.4);
 }
-.status{
-  margin-top:8px;
-  font-size:14px;
-  color:var(--muted);
+.now{
+display:flex;
+align-items:center;
+gap:20px;
 }
-.timeline{
-  width:85%;
-  margin:20px auto;
-  display:flex;
-  justify-content:space-between;
-  font-size:13px;
-  color:var(--muted);
+.cover{
+width:130px;
+height:130px;
+border-radius:14px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(255,59,63,0.2);
 }
-.progress{
-  width:85%;
-  height:8px;
-  background:#222;
-  border-radius:5px;
-  margin:0 auto 20px;
-  overflow:hidden;
-  position:relative;
+.cover img{width:100%;height:100%;object-fit:cover;}
+.info h2{
+font-size:22px;
+font-weight:700;
+margin-bottom:4px;
+}
+.info p{
+color:var(--muted);
+font-size:15px;
+}
+.progress-container{
+margin:30px 0 10px;
+}
+.bar-bg{
+width:100%;
+height:10px;
+background:#222;
+border-radius:999px;
+overflow:hidden;
+position:relative;
 }
 .bar{
-  width:0%;
-  height:100%;
-  background:var(--accent);
-  box-shadow:0 0 10px rgba(255,59,63,.5);
-  transition:width 0.2s linear;
+height:100%;
+width:0%;
+background:var(--grad);
+transition:width .2s linear;
+box-shadow:0 0 10px rgba(255,59,63,0.5);
+}
+.time{
+display:flex;
+justify-content:space-between;
+font-size:13px;
+color:var(--muted);
+margin-top:6px;
 }
 .controls{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:25px;
-  margin-bottom:30px;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:25px;
+margin-top:25px;
 }
 button{
-  background:var(--grad);
-  border:none;
-  color:white;
-  font-size:20px;
-  border-radius:50%;
-  width:55px;
-  height:55px;
-  cursor:pointer;
-  box-shadow:0 4px 14px rgba(255,59,63,.4);
-  transition:transform 0.2s;
+background:var(--grad);
+border:none;
+color:white;
+font-size:20px;
+border-radius:50%;
+width:60px;
+height:60px;
+cursor:pointer;
+box-shadow:0 8px 24px rgba(255,59,63,.4);
+transition:transform 0.15s;
 }
-button:hover{transform:scale(1.08);}
+button:hover{transform:scale(1.1);}
 button:active{transform:scale(0.95);}
-audio{display:none;}
+.footer{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:25px;
+color:var(--muted);
+font-size:13px;
+letter-spacing:1px;
+}
+.clock{
+font-weight:700;
+color:var(--accent2);
+font-size:14px;
+}
+@media(max-width:850px){
+.container{grid-template-columns:1fr;}
+.left{display:none;}
+.right{padding:25px 20px;}
+}
 </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>RadioSMG</h1>
-      <div class="freq">103.5 MHz • The Hottest Live Hits</div>
-      <div class="live-indicator">LIVE 🔴</div>
-      <div class="clock" id="clock"></div>
+<div class="container">
+  <div class="left">
+    <div class="vinyl" id="vinyl"><img id="vinylImg" src="https://upload.wikimedia.org/wikipedia/en/6/6b/Lloyd_you_single_cover.jpg" alt=""></div>
+    <div class="freq">
+      <h1>103.5 MHz</h1>
+      <p>RadioSMG FM</p>
     </div>
-    <div class="album"><img id="album" alt="Album Art"></div>
-    <div class="songinfo">
-      <h2 id="title"></h2>
-      <p id="artist"></p>
-    </div>
-    <div class="status" id="status">Laden...</div>
-
-    <div class="timeline">
-      <span id="currentTime">0:00</span>
-      <span id="duration">--:--</span>
-    </div>
-    <div class="progress"><div class="bar" id="bar"></div></div>
-
-    <div class="controls">
-      <button id="prev">⏮</button>
-      <button id="playpause">⏯</button>
-      <button id="next">⏭</button>
-    </div>
-    <audio id="audio" autoplay></audio>
   </div>
-
+  <div class="right">
+    <div>
+      <div class="top">
+        <div class="logo">RADIOSMG</div>
+        <div class="live">LIVE</div>
+      </div>
+      <div class="now">
+        <div class="cover"><img id="cover" src="https://upload.wikimedia.org/wikipedia/en/6/6b/Lloyd_you_single_cover.jpg" alt=""></div>
+        <div class="info">
+          <h2 id="title">You</h2>
+          <p id="artist">Lloyd</p>
+        </div>
+      </div>
+      <div class="progress-container">
+        <div class="bar-bg"><div class="bar" id="bar"></div></div>
+        <div class="time"><span id="current">0:00</span><span id="duration">--:--</span></div>
+      </div>
+      <div class="controls">
+        <button id="prev">⏮</button>
+        <button id="play">▶️</button>
+        <button id="next">⏭</button>
+      </div>
+    </div>
+    <div class="footer">
+      <div>Streaming • 128kbps</div>
+      <div class="clock" id="clock">--:--:--</div>
+    </div>
+  </div>
+</div>
+<audio id="audio"></audio>
 <script>
-const songs = [
-  {
-    title:"You",
-    artist:"Lloyd",
-    img:"https://upload.wikimedia.org/wikipedia/en/6/6b/Lloyd_you_single_cover.jpg",
-    src:"muziek/Lloyd-You.mp3"
-  },
-  {
-    title:"Cece's Interlude",
-    artist:"Drake",
-    img:"https://i1.sndcdn.com/artworks-dUAvxLqhrTEx-0-t500x500.jpg",
-    src:"muziek/Cece's-Interlude.mp3"
-  },
-  {
-    title:"Folded",
-    artist:"Kehlani",
-    img:"https://f4.bcbits.com/img/a3393363695_16.jpg",
-    src:"muziek/Kehlani-Folded.mp3"
-  }
+const songs=[
+{title:"You",artist:"Lloyd",img:"https://upload.wikimedia.org/wikipedia/en/6/6b/Lloyd_you_single_cover.jpg",src:"muziek/Lloyd-You.mp3"},
+{title:"Cece's Interlude",artist:"Drake",img:"https://i1.sndcdn.com/artworks-dUAvxLqhrTEx-0-t500x500.jpg",src:"muziek/Cece's-Interlude.mp3"},
+{title:"Folded",artist:"Kehlani",img:"https://f4.bcbits.com/img/a3393363695_16.jpg",src:"muziek/Kehlani-Folded.mp3"}
 ];
+let index=0;
+const audio=document.getElementById("audio");
+const play=document.getElementById("play");
+const next=document.getElementById("next");
+const prev=document.getElementById("prev");
+const bar=document.getElementById("bar");
+const current=document.getElementById("current");
+const duration=document.getElementById("duration");
+const title=document.getElementById("title");
+const artist=document.getElementById("artist");
+const cover=document.getElementById("cover");
+const vinyl=document.getElementById("vinyl");
+const vinylImg=document.getElementById("vinylImg");
+const clock=document.getElementById("clock");
 
-let index = 0;
-const album = document.getElementById("album");
-const titleEl = document.getElementById("title");
-const artistEl = document.getElementById("artist");
-const status = document.getElementById("status");
-const bar = document.getElementById("bar");
-const audio = document.getElementById("audio");
-const playpauseBtn = document.getElementById("playpause");
-const nextBtn = document.getElementById("next");
-const prevBtn = document.getElementById("prev");
-const currentTimeEl = document.getElementById("currentTime");
-const durationEl = document.getElementById("duration");
-const clockEl = document.getElementById("clock");
-
-// Display live time (like radio clock)
+function format(t){const m=Math.floor(t/60),s=Math.floor(t%60);return m+":"+(s<10?"0"+s:s)}
+function load(i){
+const s=songs[i];
+audio.src=s.src;
+title.textContent=s.title;
+artist.textContent=s.artist;
+cover.src=s.img;
+vinylImg.src=s.img;
+bar.style.width="0%";
+current.textContent="0:00";
+duration.textContent="--:--";
+audio.play().then(()=>{play.textContent="⏸";vinyl.classList.add("play");}).catch(()=>{play.textContent="▶️";});
+}
+function toggle(){
+if(audio.paused){audio.play();play.textContent="⏸";vinyl.classList.add("play");}
+else{audio.pause();play.textContent="▶️";vinyl.classList.remove("play");}
+}
+next.onclick=()=>{index=(index+1)%songs.length;load(index);}
+prev.onclick=()=>{index=(index-1+songs.length)%songs.length;load(index);}
+play.onclick=toggle;
+audio.addEventListener("loadedmetadata",()=>{duration.textContent=format(audio.duration)});
+audio.addEventListener("timeupdate",()=>{
+if(audio.duration){
+const p=(audio.currentTime/audio.duration)*100;
+bar.style.width=p+"%";
+current.textContent=format(audio.currentTime);
+}
+});
+audio.addEventListener("ended",()=>{index=(index+1)%songs.length;load(index);});
 function updateClock(){
-  const now = new Date();
-  clockEl.textContent = now.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+const n=new Date();
+clock.textContent=n.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
 }
 setInterval(updateClock,1000);
 updateClock();
-
-function formatTime(sec){
-  const m = Math.floor(sec/60);
-  const s = Math.floor(sec%60);
-  return `${m}:${s.toString().padStart(2,"0")}`;
-}
-
-function loadSong(i){
-  const s = songs[i];
-  album.src = s.img;
-  titleEl.textContent = s.title;
-  artistEl.textContent = s.artist;
-  status.textContent = `Afspelen: ${s.title} – ${s.artist}`;
-  bar.style.width = "0%";
-  currentTimeEl.textContent = "0:00";
-  durationEl.textContent = "--:--";
-  audio.src = s.src;
-  audio.play().catch(()=>{});
-  playpauseBtn.textContent = "⏸";
-}
-
-function playPause(){
-  if(audio.paused){
-    audio.play();
-    playpauseBtn.textContent = "⏸";
-  } else {
-    audio.pause();
-    playpauseBtn.textContent = "▶️";
-  }
-}
-
-nextBtn.onclick = ()=>{
-  index = (index + 1) % songs.length;
-  loadSong(index);
+window.onload=()=>{
+load(index);
+document.addEventListener('click',()=>audio.play().catch(()=>{}),{once:true});
 };
-prevBtn.onclick = ()=>{
-  index = (index - 1 + songs.length) % songs.length;
-  loadSong(index);
-};
-playpauseBtn.onclick = playPause;
-
-// Progress + time display
-audio.addEventListener("timeupdate",()=>{
-  if(audio.duration){
-    const p = (audio.currentTime / audio.duration) * 100;
-    bar.style.width = p + "%";
-    currentTimeEl.textContent = formatTime(audio.currentTime);
-    durationEl.textContent = formatTime(audio.duration);
-  }
-});
-audio.addEventListener("ended",()=>{
-  index = (index + 1) % songs.length;
-  loadSong(index);
-});
-
-window.addEventListener("load",()=>{
-  loadSong(index);
-  const resumeAudio = () => {
-    audio.play().catch(()=>{});
-    document.removeEventListener('click', resumeAudio);
-  };
-  document.addEventListener('click', resumeAudio);
-});
 </script>
 </body>
 </html>
