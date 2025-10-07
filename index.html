@@ -3,254 +3,203 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RadioSMG Live 103.5 MHz</title>
+<title>RadioSMG — Live Reactive Console</title>
 <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/3e/Radio_icon.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
 :root{
 --accent:#ff3b3f;
---accent2:#ff7073;
---dark:#0c0c0c;
---mid:#141414;
---light:#f4f4f4;
---muted:#888;
---grad:linear-gradient(120deg,var(--accent),var(--accent2));
---radius:20px;
+--accent2:#ff8a87;
+--bg1:#060606;
+--bg2:#0f1220;
+--panel:#0e0f13;
+--muted:#9aa0a6;
+--glass:rgba(255,255,255,0.03);
+--radius:18px;
+--glow:0 20px 60px rgba(255,59,63,0.18);
 }
-*{margin:0;padding:0;box-sizing:border-box;}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
 body{
-font-family:'Inter',sans-serif;
-background:radial-gradient(circle at 20% 20%,#1a1a1a 0%,#000 100%);
-color:var(--light);
+font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+background:radial-gradient(800px 400px at 12% 12%, rgba(255,59,63,0.02), transparent 10%), linear-gradient(180deg,var(--bg1),var(--bg2));
+color:#fff;
 display:flex;
-justify-content:center;
 align-items:center;
-height:100vh;
-overflow:hidden;
+justify-content:center;
+padding:30px;
 }
 .container{
-width:90%;
-max-width:950px;
-background:rgba(20,20,20,0.95);
-border-radius:var(--radius);
+width:96%;
+max-width:1100px;
+border-radius:22px;
 overflow:hidden;
-box-shadow:0 0 50px rgba(255,59,63,0.25);
 display:grid;
-grid-template-columns:360px 1fr;
-backdrop-filter:blur(12px);
+grid-template-columns:380px 1fr;
+gap:28px;
+padding:26px;
+background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+box-shadow:var(--glow);
+border:1px solid rgba(255,255,255,0.03);
 }
 .left{
-background:#0e0e0e;
+background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.02));
+padding:28px;
+border-radius:14px;
 display:flex;
 flex-direction:column;
 align-items:center;
-justify-content:center;
+gap:18px;
 position:relative;
-padding:30px 20px;
 }
-.left::before{
-content:"";
-position:absolute;
-inset:0;
-background:radial-gradient(circle at top,var(--accent) 0%,transparent 60%);
-opacity:.05;
-}
-.vinyl{
-width:250px;
-height:250px;
-border-radius:50%;
-background:conic-gradient(#111 0deg,#222 40deg,#111 80deg,#222 120deg,#111 160deg,#222 200deg,#111 240deg,#222 280deg,#111 320deg,#222 360deg);
-box-shadow:inset 0 2px 8px rgba(255,255,255,0.05),0 25px 80px rgba(0,0,0,0.8);
+.brand{
 display:flex;
+flex-direction:column;
 align-items:center;
-justify-content:center;
-animation:spin 6s linear infinite paused;
+gap:8px;
 }
-.vinyl.play{animation-play-state:running;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.vinyl img{
-width:90px;
-height:90px;
-border-radius:12px;
-object-fit:cover;
-box-shadow:0 0 25px rgba(255,59,63,.4);
-}
-.freq{
-margin-top:40px;
-text-align:center;
-}
-.freq h1{
-font-size:38px;
-background:var(--grad);
+.brand h1{
+font-size:28px;
+font-weight:900;
+letter-spacing:1px;
+background:linear-gradient(90deg,var(--accent),var(--accent2));
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-font-weight:900;
-letter-spacing:1px;
 }
-.freq p{
-font-size:14px;
-color:var(--muted);
-letter-spacing:2px;
-text-transform:uppercase;
-margin-top:4px;
-}
-
-/* RIGHT SIDE */
-.right{
-padding:40px 30px;
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-background:linear-gradient(180deg,#111,#0c0c0c);
-}
-.top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:20px;
-}
-.logo{
-font-weight:900;
-font-size:22px;
-letter-spacing:1px;
-}
-.live{
-background:var(--grad);
-color:#fff;
-font-weight:700;
-font-size:12px;
-padding:6px 14px;
-border-radius:999px;
-box-shadow:0 0 18px rgba(255,59,63,0.4);
-}
-.now{
-display:flex;
-align-items:center;
-gap:20px;
-}
-.cover{
-width:130px;
-height:130px;
-border-radius:14px;
-overflow:hidden;
-box-shadow:0 10px 25px rgba(255,59,63,0.2);
-}
-.cover img{width:100%;height:100%;object-fit:cover;}
-.info h2{
-font-size:22px;
-font-weight:700;
-margin-bottom:4px;
-}
-.info p{
-color:var(--muted);
-font-size:15px;
-}
-.progress-container{
-margin:30px 0 10px;
-}
-.bar-bg{
-width:100%;
-height:10px;
-background:#222;
-border-radius:999px;
-overflow:hidden;
+.brand small{color:var(--muted);letter-spacing:2px}
+.vinyl-wrap{
+width:300px;height:300px;border-radius:22px;padding:18px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg, rgba(255,255,255,0.01), rgba(0,0,0,0.3));
+box-shadow:0 30px 80px rgba(0,0,0,0.6);
 position:relative;
 }
-.bar{
-height:100%;
-width:0%;
-background:var(--grad);
-transition:width .2s linear;
-box-shadow:0 0 10px rgba(255,59,63,0.5);
+.vinyl{
+width:240px;height:240px;border-radius:50%;background:conic-gradient(#111 0deg,#1a1a1a 40deg,#111 80deg,#1a1a1a 120deg);display:flex;align-items:center;justify-content:center;transition:transform .25s linear;box-shadow:inset 0 6px 22px rgba(0,0,0,0.6);
 }
-.time{
+.vinyl.play{animation:spin 5.6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.vinyl .label{width:94px;height:94px;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+.vinyl .label img{width:100%;height:100%;object-fit:cover}
+.station{
+width:100%;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(0,0,0,0.03));border-radius:12px;border:1px solid rgba(255,255,255,0.02)
+}
+.station .left{display:flex;flex-direction:column}
+.station .left .call{font-weight:900;letter-spacing:1px}
+.station .right{display:flex;align-items:center;gap:10px}
+.live-pill{background:linear-gradient(90deg,var(--accent),var(--accent2));padding:6px 10px;border-radius:999px;font-weight:800}
+.freq{font-weight:900;color:var(--accent);font-size:28px}
+.right{
 display:flex;
-justify-content:space-between;
-font-size:13px;
-color:var(--muted);
-margin-top:6px;
+flex-direction:column;
+gap:18px;
 }
+.header{
+display:flex;justify-content:space-between;align-items:center;
+}
+.header .id{font-weight:800;letter-spacing:1px}
+.header .meta{display:flex;gap:10px;align-items:center}
+.meta .live{background:linear-gradient(90deg,var(--accent),var(--accent2));padding:6px 12px;border-radius:999px;font-weight:800}
+.now{
+display:flex;gap:20px;align-items:center;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.03));border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.02)
+}
+.cover{width:150px;height:150px;border-radius:12px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.5)}
+.cover img{width:100%;height:100%;object-fit:cover}
+.meta-info{flex:1;display:flex;flex-direction:column;gap:8px}
+.song{font-size:22px;font-weight:900}
+.artist{color:var(--muted);font-size:15px}
+.wave{
+display:flex;gap:6px;height:48px;align-items:end;overflow:hidden;padding:8px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.01), transparent)
+}
+.wave span{width:4px;border-radius:6px;background:linear-gradient(180deg,var(--accent),var(--accent2));animation:wave 900ms ease-in-out infinite}
+.wave span:nth-child(2){animation-delay:80ms}
+.wave span:nth-child(3){animation-delay:160ms}
+.wave span:nth-child(4){animation-delay:240ms}
+.wave span:nth-child(5){animation-delay:320ms}
+.wave span:nth-child(6){animation-delay:420ms}
+@keyframes wave{0%{height:8px}50%{height:40px}100%{height:8px}}
 .controls{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:25px;
-margin-top:25px;
+display:flex;flex-direction:column;gap:14px;
 }
-button{
-background:var(--grad);
-border:none;
-color:white;
-font-size:20px;
-border-radius:50%;
-width:60px;
-height:60px;
-cursor:pointer;
-box-shadow:0 8px 24px rgba(255,59,63,.4);
-transition:transform 0.15s;
-}
-button:hover{transform:scale(1.1);}
-button:active{transform:scale(0.95);}
-.footer{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-top:25px;
-color:var(--muted);
-font-size:13px;
-letter-spacing:1px;
-}
-.clock{
-font-weight:700;
-color:var(--accent2);
-font-size:14px;
-}
-@media(max-width:850px){
-.container{grid-template-columns:1fr;}
-.left{display:none;}
-.right{padding:25px 20px;}
+.progress-wrap{background:#151515;border-radius:999px;padding:6px;border:1px solid rgba(255,255,255,0.02)}
+.progress-bg{height:12px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(0,0,0,0.02));border-radius:999px;overflow:hidden;position:relative}
+.progress{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 12px 40px rgba(255,59,63,0.12);transition:width .14s linear}
+.time-row{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-top:8px}
+.buttons{display:flex;justify-content:center;gap:18px;margin-top:6px}
+.btn{width:68px;height:68px;border-radius:14px;border:none;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:0 14px 36px rgba(0,0,0,0.6)}
+.btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;font-weight:800}
+.footer{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;margin-top:8px}
+.clock{font-weight:800;color:var(--accent2)}
+@media(max-width:980px){
+.container{grid-template-columns:1fr;gap:18px;padding:18px}
+.left{order:2}
+.right{order:1}
+.vinyl-wrap{width:220px;height:220px}
+.vinyl{width:180px;height:180px}
+.cover{width:110px;height:110px}
 }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container" id="app">
   <div class="left">
-    <div class="vinyl" id="vinyl"><img id="vinylImg" src="https://upload.wikimedia.org/wikipedia/en/6/6b/Lloyd_you_single_cover.jpg" alt=""></div>
-    <div class="freq">
-      <h1>103.5 MHz</h1>
-      <p>RadioSMG FM</p>
+    <div class="brand">
+      <h1>RADIO<span style="opacity:.9">SMG</span></h1>
+      <small>Live FM • Reactive Visuals</small>
+    </div>
+    <div class="vinyl-wrap">
+      <div class="vinyl" id="vinyl">
+        <div class="label"><img id="labelImg" src="https://upload.wikimedia.org/wikipedia/en/6/6b/Lloyd_you_single_cover.jpg" alt=""></div>
+      </div>
+    </div>
+    <div class="station">
+      <div class="left">
+        <div class="call">RadioSMG</div>
+        <div class="tag" style="color:var(--muted)">Live • Hits • Throwbacks</div>
+      </div>
+      <div class="right">
+        <div class="freq">103.5</div>
+        <div style="display:flex;flex-direction:column;align-items:end;margin-left:6px">
+          <div class="live-pill">LIVE</div>
+          <div style="color:var(--muted);font-size:12px;margin-top:6px">MHz</div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="right">
-    <div>
-      <div class="top">
-        <div class="logo">RADIOSMG</div>
-        <div class="live">LIVE</div>
-      </div>
-      <div class="now">
-        <div class="cover"><img id="cover" src="https://upload.wikimedia.org/wikipedia/en/6/6b/Lloyd_you_single_cover.jpg" alt=""></div>
-        <div class="info">
-          <h2 id="title">You</h2>
-          <p id="artist">Lloyd</p>
+    <div class="header">
+      <div class="id">RADIOSMG</div>
+      <div class="meta"><div class="live">ON AIR</div></div>
+    </div>
+    <div class="now">
+      <div class="cover"><img id="cover" src="https://upload.wikimedia.org/wikipedia/en/6/6b/Lloyd_you_single_cover.jpg" alt=""></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:12px">
+        <div class="meta-info">
+          <div class="song" id="title">You</div>
+          <div class="artist" id="artist">Lloyd</div>
+        </div>
+        <div class="wave" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
       </div>
-      <div class="progress-container">
-        <div class="bar-bg"><div class="bar" id="bar"></div></div>
-        <div class="time"><span id="current">0:00</span><span id="duration">--:--</span></div>
+    </div>
+    <div class="controls">
+      <div class="progress-wrap">
+        <div class="progress-bg"><div class="progress" id="progress"></div></div>
+        <div class="time-row"><div id="current">0:00</div><div id="total">--:--</div></div>
       </div>
-      <div class="controls">
-        <button id="prev">⏮</button>
-        <button id="play">▶️</button>
-        <button id="next">⏭</button>
+      <div class="buttons" role="group">
+        <button class="btn" id="prev">⏮</button>
+        <button class="btn primary" id="play">▶</button>
+        <button class="btn" id="next">⏭</button>
       </div>
     </div>
     <div class="footer">
-      <div>Streaming • 128kbps</div>
+      <div id="buffer">Buffer: —</div>
       <div class="clock" id="clock">--:--:--</div>
     </div>
   </div>
 </div>
-<audio id="audio"></audio>
+<audio id="audio" preload="metadata"></audio>
+<canvas id="c" width="200" height="200" style="display:none"></canvas>
 <script>
 const songs=[
 {title:"You",artist:"Lloyd",img:"https://upload.wikimedia.org/wikipedia/en/6/6b/Lloyd_you_single_cover.jpg",src:"muziek/Lloyd-You.mp3"},
@@ -258,59 +207,77 @@ const songs=[
 {title:"Folded",artist:"Kehlani",img:"https://f4.bcbits.com/img/a3393363695_16.jpg",src:"muziek/Kehlani-Folded.mp3"}
 ];
 let index=0;
-const audio=document.getElementById("audio");
-const play=document.getElementById("play");
-const next=document.getElementById("next");
-const prev=document.getElementById("prev");
-const bar=document.getElementById("bar");
-const current=document.getElementById("current");
-const duration=document.getElementById("duration");
-const title=document.getElementById("title");
-const artist=document.getElementById("artist");
-const cover=document.getElementById("cover");
-const vinyl=document.getElementById("vinyl");
-const vinylImg=document.getElementById("vinylImg");
-const clock=document.getElementById("clock");
-
-function format(t){const m=Math.floor(t/60),s=Math.floor(t%60);return m+":"+(s<10?"0"+s:s)}
+const audio=document.getElementById('audio');
+const playBtn=document.getElementById('play');
+const nextBtn=document.getElementById('next');
+const prevBtn=document.getElementById('prev');
+const progress=document.getElementById('progress');
+const currentEl=document.getElementById('current');
+const totalEl=document.getElementById('total');
+const titleEl=document.getElementById('title');
+const artistEl=document.getElementById('artist');
+const cover=document.getElementById('cover');
+const labelImg=document.getElementById('labelImg');
+const vinyl=document.getElementById('vinyl');
+const clock=document.getElementById('clock');
+const bufferEl=document.getElementById('buffer');
+const canvas=document.getElementById('c');
+const ctx=canvas.getContext('2d');
+function hex(r,g,b){return'#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1)}
+function clamp(v){return Math.max(0,Math.min(255,Math.round(v)))}
+function lighten(r,g,b,amt){return [clamp(r+amt),clamp(g+amt),clamp(b+amt)]}
+function setThemeFromRgb(r,g,b){
+const a=hex(r,g,b);
+const l=lighten(r,g,b,54);
+const a2=hex(l[0],l[1],l[2]);
+document.documentElement.style.setProperty('--accent',a);
+document.documentElement.style.setProperty('--accent2',a2);
+document.documentElement.style.setProperty('--glow','0 30px 90px rgba('+r+','+g+','+b+',0.18)');
+document.documentElement.style.setProperty('--bg1','rgb('+Math.max(6,r-18)+','+Math.max(6,g-18)+','+Math.max(6,b-18)+')');
+document.documentElement.style.setProperty('--bg2','rgb('+Math.max(0,r-38)+','+Math.max(0,g-38)+','+Math.max(0,b-38)+')');
+}
+function extractAndApply(img){
+try{
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.drawImage(img,0,0,canvas.width,canvas.height);
+const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+let r=0,g=0,b=0,count=0;
+for(let i=0;i<data.length;i+=16){
+const alpha=data[i+3];
+if(alpha<125)continue;
+r+=data[i];g+=data[i+1];b+=data[i+2];count++;
+}
+if(count>0){r=Math.floor(r/count);g=Math.floor(g/count);b=Math.floor(b/count);setThemeFromRgb(r,g,b)}
+}catch(e){}
+}
 function load(i){
 const s=songs[i];
-audio.src=s.src;
-title.textContent=s.title;
-artist.textContent=s.artist;
+index=i;
+titleEl.textContent=s.title;
+artistEl.textContent=s.artist;
 cover.src=s.img;
-vinylImg.src=s.img;
-bar.style.width="0%";
-current.textContent="0:00";
-duration.textContent="--:--";
-audio.play().then(()=>{play.textContent="⏸";vinyl.classList.add("play");}).catch(()=>{play.textContent="▶️";});
+labelImg.src=s.img;
+const img=new Image();
+img.crossOrigin='Anonymous';
+img.src=s.img;
+img.onload=()=>extractAndApply(img);
+progress.style.width='0%';
+currentEl.textContent='0:00';
+totalEl.textContent='--:--';
+audio.src=s.src;
+audio.play().then(()=>{playBtn.textContent='⏸';vinyl.classList.add('play')}).catch(()=>{playBtn.textContent='▶';vinyl.classList.remove('play')});
 }
-function toggle(){
-if(audio.paused){audio.play();play.textContent="⏸";vinyl.classList.add("play");}
-else{audio.pause();play.textContent="▶️";vinyl.classList.remove("play");}
-}
-next.onclick=()=>{index=(index+1)%songs.length;load(index);}
-prev.onclick=()=>{index=(index-1+songs.length)%songs.length;load(index);}
-play.onclick=toggle;
-audio.addEventListener("loadedmetadata",()=>{duration.textContent=format(audio.duration)});
-audio.addEventListener("timeupdate",()=>{
-if(audio.duration){
-const p=(audio.currentTime/audio.duration)*100;
-bar.style.width=p+"%";
-current.textContent=format(audio.currentTime);
-}
-});
-audio.addEventListener("ended",()=>{index=(index+1)%songs.length;load(index);});
-function updateClock(){
-const n=new Date();
-clock.textContent=n.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-}
-setInterval(updateClock,1000);
-updateClock();
-window.onload=()=>{
-load(index);
-document.addEventListener('click',()=>audio.play().catch(()=>{}),{once:true});
-};
+function format(t){if(!isFinite(t))return'--:--';const m=Math.floor(t/60),s=Math.floor(t%60);return m+':'+(s<10?'0'+s:s)}
+playBtn.addEventListener('click',()=>{if(audio.paused){audio.play();playBtn.textContent='⏸';vinyl.classList.add('play')}else{audio.pause();playBtn.textContent='▶';vinyl.classList.remove('play')}})
+nextBtn.addEventListener('click',()=>{index=(index+1)%songs.length;load(index)})
+prevBtn.addEventListener('click',()=>{index=(index-1+songs.length)%songs.length;load(index)})
+audio.addEventListener('loadedmetadata',()=>{totalEl.textContent=format(audio.duration)})
+audio.addEventListener('timeupdate',()=>{if(audio.duration){const p=(audio.currentTime/audio.duration)*100;progress.style.width=p+'%';currentEl.textContent=format(audio.currentTime)}updateBuffer()})
+audio.addEventListener('ended',()=>{index=(index+1)%songs.length;load(index)})
+function updateBuffer(){try{const b=audio.buffered;if(b.length){const end=b.end(b.length-1);const perc=Math.min(100,(end/(audio.duration||end))*100);bufferEl.textContent='Buffer: '+Math.round(perc)+'%'}else bufferEl.textContent='Buffer: 0%'}catch(e){bufferEl.textContent='Buffer: —'}}
+function updateClock(){const n=new Date();clock.textContent=n.toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
+setInterval(updateClock,1000);updateClock();
+window.addEventListener('load',()=>{load(index);document.addEventListener('click',()=>audio.play().catch(()=>{}),{once:true})})
 </script>
 </body>
 </html>
