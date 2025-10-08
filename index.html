@@ -27,15 +27,12 @@ body{
   transition:all .4s ease;
 }
 .sidebar{background:rgba(255,255,255,0.02);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px;transition:all .4s ease}
-.sidebar.hidden{transform:translateX(-120%);opacity:0}
 .header{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;}
 .brand{display:flex;gap:14px;align-items:center}
-.logo{width:60px;height:60px;border-radius:12px;background:linear-gradient(135deg,var(--accent2),var(--accent3));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;box-shadow:var(--neon)}
-.logo img{width:48px;height:48px;object-fit:contain;border-radius:10px}
+.logo{width:60px;height:60px;display:flex;align-items:center;justify-content:center;}
+.logo img{width:60px;height:60px;object-fit:contain;border-radius:12px}
 .title h1{font-size:18px;font-weight:800}
 .title p{font-size:12px;color:var(--muted);margin-top:4px}
-.toggle{background:rgba(255,255,255,0.05);color:#fff;border:none;padding:10px 14px;border-radius:12px;cursor:pointer;transition:.3s}
-.toggle:hover{background:rgba(255,255,255,0.1);transform:scale(1.05)}
 .station-list{display:flex;flex-direction:column;gap:10px;transition:.4s ease}
 .station{display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;cursor:pointer;transition:0.1s}
 .station:hover{background:rgba(255,255,255,0.03);transform:translateY(-2px)}
@@ -61,7 +58,6 @@ body{
 .volume{display:flex;align-items:center;gap:6px}
 input[type=range]{width:100px;appearance:none;height:6px;background:rgba(255,255,255,0.05);border-radius:6px}
 input[type=range]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;border-radius:50%;background:linear-gradient(90deg,var(--accent2),var(--accent3))}
-@media(max-width:900px){.app{grid-template-columns:1fr}.sidebar{position:absolute;left:0;top:0;bottom:0;width:280px;z-index:10;transform:translateX(-100%)}.sidebar.show{transform:translateX(0)}}
 </style>
 </head>
 <body>
@@ -74,7 +70,6 @@ input[type=range]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;b
         <p>Kies je zender</p>
       </div>
     </div>
-    <button class="toggle" id="toggleBtn">☰</button>
   </div>
 
   <aside class="sidebar" id="sidebar">
@@ -108,11 +103,11 @@ input[type=range]::-webkit-slider-thumb{appearance:none;width:14px;height:14px;b
 <audio id="audio" autoplay></audio>
 
 <script>
-const stations = [
-  {name:"RadioSMG", sub:"Eigen programma", img:"https://i.imgur.com/J8HhLpn.png", local:true},
-  {name:"MNM", sub:"Make Life Sing!", img:"https://streamurl.link/images/broadcasts/26bb9e9.webp", src:"http://icecast.vrtcdn.be/mnm-high.mp3/"},
-  {name:"Qmusic", sub:"Q sounds better with you", img:"https://streamurl.link/images/broadcasts/c251fdb.webp", src:"https://icecast-qmusicnl-cdp.triple-it.nl/Qmusic_nl_live.mp3"},
-  {name:"Nostalgie", sub:"always further, always higher!", img:"https://streamurl.link/images/broadcasts/55c8787.webp", src:"https://streaming.nrjaudio.fm/oug7girb92oc"}
+const stations=[
+  {name:"RadioSMG",sub:"Eigen programma",img:"https://i.imgur.com/J8HhLpn.png",local:true},
+  {name:"MNM",sub:"VRT Radio",img:"https://upload.wikimedia.org/wikipedia/en/2/22/MNM_logo_2021.svg",src:"http://icecast.vrtcdn.be/mnm-high.mp3/"},
+  {name:"Qmusic",sub:"Nederland",img:"https://upload.wikimedia.org/wikipedia/en/7/73/Qmusic_logo_2015.svg",src:"https://icecast-qmusicnl-cdp.triple-it.nl/Qmusic_nl_live.mp3"},
+  {name:"Nostalgie",sub:"NRJ Group",img:"https://upload.wikimedia.org/wikipedia/commons/1/12/Nostalgie_logo_2023.svg",src:"https://streaming.nrjaudio.fm/oug7girb92oc"}
 ];
 const smgTracks=[
   {titel:"Inleiding",artiest:"Anisa Osman",src:"muziek/inleiding.mp3",img:"https://i.imgur.com/fCqW2E0.jpeg"},
@@ -121,8 +116,6 @@ const smgTracks=[
   {titel:"Folded",artiest:"Kehlani",src:"muziek/Kehlani-Folded.mp3",img:"https://i.imgur.com/g7jZb2E.jpeg"},
   {titel:"Uitleiding",artiest:"Tristan Vansonhoven",src:"muziek/uitleiding.mp3",img:"https://i.imgur.com/KiPO7x8.jpeg"}
 ];
-const sidebar=document.getElementById('sidebar');
-const toggleBtn=document.getElementById('toggleBtn');
 const stationsEl=document.getElementById('stations');
 const audio=document.getElementById('audio');
 const playBtn=document.getElementById('playBtn');
@@ -136,7 +129,8 @@ const vol=document.getElementById('vol');
 const visualImg=document.getElementById('visualImg');
 const trackTitle=document.getElementById('trackTitle');
 const trackArtist=document.getElementById('trackArtist');
-let currentStation=0,index=0;
+let currentStation=0,index=0,metaInterval=null;
+
 function renderStations(){
   stationsEl.innerHTML='';
   stations.forEach((s,i)=>{
@@ -147,13 +141,43 @@ function renderStations(){
     stationsEl.appendChild(el);
   });
 }
+
 function selectStation(i){
   currentStation=i;renderStations();
   const s=stations[i];
+  clearInterval(metaInterval);
   if(s.local){index=0;loadSMG(index);}
-  else{audio.src=s.src;audio.play();visualImg.src=s.img;trackTitle.textContent=s.name;trackArtist.textContent=s.sub;}
+  else{
+    audio.src=s.src;
+    audio.play();
+    visualImg.src=s.img;
+    trackTitle.textContent=s.name;
+    trackArtist.textContent=s.sub;
+    updateMetadata(s.name);
+    metaInterval=setInterval(()=>updateMetadata(s.name),10000);
+  }
   playBtn.textContent='⏸';
 }
+
+async function updateMetadata(name){
+  try{
+    if(name==="MNM"){
+      const res=await fetch("https://services.vrt.be/playlist/onair?channel_code=MNM");
+      const data=await res.json();
+      trackTitle.textContent=data.onairs[0].title;
+      trackArtist.textContent=data.onairs[0].artist;
+    }
+    else if(name==="Qmusic"){
+      const res=await fetch("https://playerservices.streamtheworld.com/api/livestream?station=QmusicNL");
+      const data=await res.json();
+      trackTitle.textContent=data["data"][0]["TITLE"];
+      trackArtist.textContent=data["data"][0]["ARTIST"];
+    }
+  }catch(e){
+    console.log("Geen metadata",e);
+  }
+}
+
 function loadSMG(i){
   const t=smgTracks[i];
   audio.src=t.src;
@@ -171,7 +195,6 @@ audio.addEventListener('timeupdate',()=>{const p=(audio.currentTime/(audio.durat
 function fmt(s){if(!isFinite(s))return"--:--";let m=Math.floor(s/60);let sec=Math.floor(s%60).toString().padStart(2,'0');return`${m}:${sec}`;}
 mute.onclick=()=>{audio.muted=!audio.muted;mute.textContent=audio.muted?'🔇':'🔊';};
 vol.oninput=()=>{audio.volume=vol.value;};
-toggleBtn.onclick=()=>{sidebar.classList.toggle('show');};
 renderStations();
 selectStation(0);
 </script>
