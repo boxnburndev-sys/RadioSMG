@@ -3,191 +3,235 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RadioSMG — Studio Dashboard</title>
+<title>RadioSMG</title>
 <link rel="icon" href="favicon.ico">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Orbitron',sans-serif;}
-body{
-  background:#0a0a0a;
-  color:#fff;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  overflow:hidden;
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-.app{
-  width:95%;
-  max-width:1200px;
-  display:grid;
-  grid-template-columns:280px 1fr;
-  gap:20px;
-  background:rgba(20,20,20,0.95);
-  border-radius:20px;
-  box-shadow:0 0 40px rgba(0,255,255,0.3);
-  padding:20px;
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at 20% 20%, #05070a 0%, #000 80%);
+  color: #e9f9ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
 }
-.sidebar{
-  background:rgba(30,30,30,0.95);
-  border-radius:16px;
-  padding:16px;
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  overflow-y:auto;
+
+/* --- APP LAYOUT --- */
+.app {
+  width: 95%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+  background: rgba(15, 25, 35, 0.6);
+  border-radius: 24px;
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.1);
+  padding: 24px;
 }
-.sidebar::-webkit-scrollbar{width:6px;}
-.sidebar::-webkit-scrollbar-thumb{background:cyan;border-radius:3px;}
-.sidebar h2{
-  font-size:18px;
-  text-align:center;
-  margin-bottom:10px;
-  color:#0ff;
-  text-shadow:0 0 10px #0ff;
+
+/* --- SIDEBAR --- */
+.sidebar {
+  background: rgba(20, 30, 40, 0.7);
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  box-shadow: inset 0 0 20px rgba(0,255,255,0.05);
 }
-.station{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:10px;
-  border-radius:12px;
-  cursor:pointer;
-  transition:0.2s;
-  border:1px solid rgba(0,255,255,0.2);
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(0,255,255,0.3); border-radius: 3px; }
+
+.sidebar h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  text-align: center;
+  color: #00f5ff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px #00eaff;
+  margin-bottom: 6px;
 }
-.station.active{
-  background:linear-gradient(90deg,rgba(0,255,255,0.2),rgba(255,0,255,0.1));
-  box-shadow:0 0 10px cyan;
+
+.station {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid rgba(0,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+  transition: 0.25s;
 }
-.station img{
-  width:50px;
-  height:50px;
-  border-radius:8px;
-  object-fit:cover;
+.station:hover {
+  background: rgba(0,255,255,0.08);
+  transform: translateX(4px);
 }
-.station .meta{
-  flex:1;
+.station.active {
+  background: linear-gradient(90deg, rgba(0,255,255,0.15), rgba(255,0,255,0.1));
+  border: 1px solid rgba(0,255,255,0.4);
+  box-shadow: 0 0 15px rgba(0,255,255,0.3);
 }
-.station .meta .name{font-size:14px;font-weight:700;}
-.station .meta .sub{font-size:12px;color:rgba(255,255,255,0.6);}
-.main-player{
-  background:rgba(20,20,20,0.95);
-  border-radius:16px;
-  padding:24px;
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-  box-shadow:0 0 30px rgba(0,255,255,0.2);
+.station img {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  object-fit: cover;
 }
-.visual{
-  position:relative;
-  height:300px;
-  border-radius:16px;
-  overflow:hidden;
-  background:#111;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 0 20px cyan inset;
+.station .meta .name { font-weight: 600; font-size: 14px; }
+.station .meta .sub { font-size: 12px; color: rgba(255,255,255,0.6); }
+
+/* --- MAIN PLAYER --- */
+.main-player {
+  background: rgba(15, 25, 35, 0.7);
+  border-radius: 20px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  box-shadow: 0 0 25px rgba(0,255,255,0.1);
+  position: relative;
 }
-.visual img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:brightness(0.5);
+
+/* --- VISUAL --- */
+.visual {
+  position: relative;
+  height: 320px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #0a0f13;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 30px rgba(0,255,255,0.15);
 }
-.visual .overlay{
-  position:absolute;
-  text-align:center;
-  color:#0ff;
-  z-index:2;
+.visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.55) contrast(1.05);
 }
-.visual .overlay h2{
-  font-size:24px;
-  margin-bottom:4px;
-  text-shadow:0 0 10px #0ff;
+.visual .overlay {
+  position: absolute;
+  text-align: center;
+  color: #00eaff;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
 }
-.visual .overlay p{
-  font-size:16px;
-  color:rgba(0,255,255,0.8);
+.visual .overlay h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 22px;
+  margin-bottom: 4px;
+  text-shadow: 0 0 12px #00f5ff;
 }
-.controls{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
+.visual .overlay p {
+  font-size: 15px;
+  color: rgba(0,255,255,0.7);
 }
-.btn{
-  width:60px;height:60px;
-  border:none;
-  border-radius:50%;
-  font-size:22px;
-  cursor:pointer;
-  color:#fff;
-  background:linear-gradient(135deg,cyan,magenta);
-  box-shadow:0 0 20px cyan;
-  transition:0.2s;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+
+/* --- CONTROLS --- */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
-.btn:hover{
-  transform:scale(1.1);
-  box-shadow:0 0 25px magenta,0 0 50px cyan;
+
+.btn {
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  color: #fff;
+  background: radial-gradient(circle at 30% 30%, #00eaff 0%, #0099ff 100%);
+  box-shadow: 0 0 15px rgba(0,255,255,0.3);
+  transition: all 0.2s ease;
 }
-.btn.secondary{
-  width:45px;height:45px;
-  background:rgba(0,255,255,0.1);
-  font-size:18px;
+.btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(0,255,255,0.5);
 }
-.progress{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
+.btn.secondary {
+  width: 45px;
+  height: 45px;
+  font-size: 18px;
+  background: rgba(0,255,255,0.08);
+  box-shadow: none;
 }
-.bar{
-  height:10px;
-  background:rgba(0,255,255,0.1);
-  border-radius:10px;
-  overflow:hidden;
+.btn.secondary:hover {
+  background: rgba(0,255,255,0.2);
 }
-.fill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,cyan,magenta);
-  transition:width .1s;
+
+/* --- PROGRESS --- */
+.progress {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-.times{
-  display:flex;
-  justify-content:space-between;
-  font-size:12px;
-  color:rgba(255,255,255,0.6);
+.bar {
+  height: 10px;
+  background: rgba(0,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
 }
-.volume{
-  display:flex;
-  align-items:center;
-  gap:6px;
+.fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00f5ff, #ff00ff);
+  transition: width .2s;
+  box-shadow: 0 0 8px rgba(0,255,255,0.6);
 }
-input[type=range]{
-  width:100px;
-  appearance:none;
-  height:6px;
-  background:rgba(0,255,255,0.1);
-  border-radius:6px;
+.times {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
 }
-input[type=range]::-webkit-slider-thumb{
-  appearance:none;
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  background:linear-gradient(90deg,cyan,magenta);
-  cursor:pointer;
+
+/* --- VOLUME --- */
+.volume {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
+input[type=range] {
+  width: 100px;
+  appearance: none;
+  height: 6px;
+  background: rgba(0,255,255,0.1);
+  border-radius: 6px;
+}
+input[type=range]::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #00f5ff, #ff00ff);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0,255,255,0.6);
+}
+
+/* --- RESPONSIVE --- */
 @media(max-width:900px){
   .app{grid-template-columns:1fr;}
-  .sidebar{position:absolute;left:0;top:0;bottom:0;width:260px;transform:translateX(-100%);}
+  .sidebar{position:absolute;left:0;top:0;bottom:0;width:260px;transform:translateX(-100%);transition:0.4s;}
   .sidebar.show{transform:translateX(0);}
 }
 </style>
@@ -195,7 +239,7 @@ input[type=range]::-webkit-slider-thumb{
 <body>
 <div class="app">
   <aside class="sidebar" id="sidebar">
-    <h2>Zenders</h2>
+    <h2>ZENDERS</h2>
     <div class="station-list" id="stations"></div>
   </aside>
 
@@ -203,18 +247,21 @@ input[type=range]::-webkit-slider-thumb{
     <div class="visual">
       <img id="visualImg" src="">
       <div class="overlay">
-        <h2 id="trackTitle">Kies een zender</h2>
+        <h2 id="trackTitle">Gemaakt door Tristan Vansonhoven</h2>
         <p id="trackArtist"></p>
       </div>
     </div>
+
     <div class="controls">
       <button class="btn secondary" id="prevBtn">⏮</button>
       <button class="btn" id="playBtn">▶</button>
       <button class="btn secondary" id="nextBtn">⏭</button>
+
       <div class="progress">
         <div class="bar"><div class="fill" id="progress"></div></div>
         <div class="times"><span id="cur">0:00</span><span id="dur">--:--</span></div>
       </div>
+
       <div class="volume">
         <button class="btn secondary" id="mute">🔊</button>
         <input type="range" id="vol" min="0" max="1" step="0.01" value="0.9">
@@ -230,7 +277,7 @@ const stations = [
   {name:"RadioSMG", sub:"Eigen programma", img:"https://i.imgur.com/J8HhLpn.png", local:true},
   {name:"MNM", sub:"Make Life Sing!", img:"https://streamurl.link/images/broadcasts/26bb9e9.webp", src:"http://icecast.vrtcdn.be/mnm-high.mp3/"},
   {name:"Qmusic", sub:"Q sounds better with you", img:"https://streamurl.link/images/broadcasts/c251fdb.webp", src:"https://icecast-qmusicnl-cdp.triple-it.nl/Qmusic_nl_live.mp3"},
-  {name:"Nostalgie", sub:"always further, always higher!", img:"https://streamurl.link/images/broadcasts/55c8787.webp", src:"https://streaming.nrjaudio.fm/oug7girb92oc"}
+  {name:"Nostalgie", sub:"Always further, always higher!", img:"https://streamurl.link/images/broadcasts/55c8787.webp", src:"https://streaming.nrjaudio.fm/oug7girb92oc"}
 ];
 const smgTracks=[
   {titel:"Inleiding",artiest:"Anisa Osman",src:"muziek/inleiding.mp3",img:"https://i.imgur.com/fCqW2E0.jpeg"},
